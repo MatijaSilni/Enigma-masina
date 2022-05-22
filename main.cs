@@ -5,106 +5,208 @@ class Program
     static char[] prviRed = { 'Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O' };
     static char[] drugiRed = { 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K' };
     static char[] treciRed = { 'P', 'Y', 'X', 'C', 'V', 'B', 'N', 'M', 'L' };
-    static int[] abeceda = { 00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
-    static int X = 0, Y = 0;
-    static int[] prviRotor = { 01, 12, 04, 06, 21, 08, 19, 25, 15, 20, 17, 00, 10, 16, 03, 24, 14, 07, 13, 22, 11, 18, 23, 02, 09, 25};
-    static int[] drugiRotor = { 03, 02, 01, 04, 12, 23, 25, 00, 11, 22, 05, 19, 14, 09, 20, 13, 24, 21, 18, 08, 16, 06, 07, 17, 10, 15};
-    static int[] treciRotor = { 15, 22, 16, 01, 18, 25, 24, 12, 20, 08, 19, 23, 21, 05, 06, 07, 03, 02, 14, 17, 13, 10, 04, 09, 11, 00};
-    static int[] reflektot = { 11, 14, 18, 25, 07, 10, 19, 04, 13, 15, 05, 00, 23, 08, 01, 09, 24, 20, 02, 06, 17, 01, 09, 12, 16, 03};
+  
+    static char[] abeceda = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    static int X = 2, Y = 0;
+  
+    static char[] prviRotor = { 'E', 'K', 'M', 'F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'};
+    static int[] drugiRotor = { 'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'};
+    static char[] treciRotor = { 'B', 'D', 'F', 'H', 'J', 'L', 'C', 'P', 'R', 'T', 'X', 'V', 'Z', 'N', 'Y', 'E', 'I', 'W', 'G', 'A', 'K', 'M', 'U', 'S', 'Q', 'O'};
+    static char[] cetvrtiRotor = { 'E', 'S', 'O', 'V', 'P', 'Z', 'J', 'A', 'Y', 'Q', 'U', 'I', 'R', 'H', 'X', 'L', 'N', 'F', 'T', 'G', 'K', 'D', 'C', 'M', 'W', 'B'};
+    static char[] petiRotor = { 'V', 'Z', 'B', 'R', 'G', 'I', 'T', 'Y', 'U', 'P', 'S', 'D', 'N', 'H', 'L', 'X', 'A', 'W', 'M', 'J', 'Q', 'O', 'F', 'E', 'C', 'K'};
+     static int[] prviReflektor = { 'Y', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'A', 'T' };
+        static char[] drugiReflektor = { 'F', 'V', 'P', 'J', 'I', 'A', 'O', 'Y', 'E', 'D', 'R', 'Z', 'X', 'W', 'G', 'C', 'T', 'K', 'U', 'Q', 'S', 'B', 'N', 'M', 'H', 'L' };
+
     static void CrtanjeRotora()
-    {
-      char hor = '\u2500', ver = '\u2502';
-      char gLevi = '\u250C', gDesni = '\u2510';
-      char dLevi = '\u2514', dDesni = '\u2518';
-      char levi = '\u251C', desni = '\u2524';
+        {
+            char hor = '\u2500', ver = '\u2502';
+            char gLevi = '\u250C', gDesni = '\u2510';
+            char dLevi = '\u2514', dDesni = '\u2518';
+            char levi = '\u251C', desni = '\u2524';
+            int rotor1 = 0;
+            int rotor2 = 0;
+            int rotor3 = 0;
+            //prvi rotor
+            Console.SetCursorPosition(36, 5);
+            Console.Write("" + gLevi + hor + hor + hor + hor + gDesni);
 
-    //prvi rotor
-    Console.SetCursorPosition(20, 5);
-        Console.Write("" + gLevi + hor + hor + hor + gDesni);
+            Console.SetCursorPosition(36, 6);
+            Console.Write("" + ver + " " + (rotor1 + 1).ToString("00") + " " + ver + "   ");
 
-        Console.SetCursorPosition(20, 6);
-        Console.Write("" + ver + " " + abeceda[1] + " " + ver + "   ");
+            Console.SetCursorPosition(36, 7);
+            Console.Write("" + levi + hor + hor + hor + hor + desni + "  ");
 
-        Console.SetCursorPosition(20, 7);
-        Console.Write("" + levi + hor + hor + hor + desni + "   ");
+            Console.SetCursorPosition(36, 8);
+            Console.Write("" + ver + "    " + ver + "  ");
 
-        Console.SetCursorPosition(20, 8);
-        Console.Write("" + ver + "   " + ver + "   ");
+            Console.SetCursorPosition(36, 9);
+            Console.Write("" + ver + " " + rotor1.ToString("00") + " " + ver + "   ");
 
-        Console.SetCursorPosition(20, 9);
-        Console.Write("" + ver + " " + abeceda[0] + " " + ver + "   ");
+            Console.SetCursorPosition(36, 10);
+            Console.Write("" + ver + "    " + ver + "   ");
 
-        Console.SetCursorPosition(20, 10);
-        Console.Write("" + ver + "   " + ver + "   ");
+            Console.SetCursorPosition(36, 11);
+            Console.Write("" + levi + hor + hor + hor + hor + desni + "  ");
 
-        Console.SetCursorPosition(20, 11);
-        Console.Write("" + levi + hor + hor + hor + desni + "   ");
+            Console.SetCursorPosition(36, 12);
+            Console.Write("" + ver + " 25" + " " + ver + "   ");
 
-        Console.SetCursorPosition(20, 12);
-        Console.Write("" + ver + " " + abeceda[25] + " " + ver + "   ");
+            Console.SetCursorPosition(36, 13);
+            Console.Write("" + dLevi + hor + hor + hor + hor + dDesni + "  ");
 
-        Console.SetCursorPosition(20, 13);
-        Console.Write("" + dLevi + hor + hor + hor + dDesni + "   ");
+            //drugi rotor
+            Console.SetCursorPosition(28, 5);
+            Console.Write("" + gLevi + hor + hor + hor + hor + gDesni);
 
-        //drugi rotor
-        Console.SetCursorPosition(26, 5);
-        Console.Write("" + gLevi + hor + hor + hor + gDesni);
+            Console.SetCursorPosition(28, 6);
+            Console.Write("" + ver + " " + (rotor2 + 1).ToString("00") + " " + ver + "  ");
 
-        Console.SetCursorPosition(26, 6);
-        Console.Write("" + ver + " " + abeceda[1] + " " + ver + "   ");
+            Console.SetCursorPosition(28, 7);
+            Console.Write("" + levi + hor + hor + hor + hor + desni + "  ");
 
-        Console.SetCursorPosition(26, 7);
-        Console.Write("" + levi + hor + hor + hor + desni + "   ");
+            Console.SetCursorPosition(28, 8);
+            Console.Write("" + ver + "    " + ver + "  ");
 
-        Console.SetCursorPosition(26, 8);
-        Console.Write("" + ver + "   " + ver + "   ");
+            Console.SetCursorPosition(28, 9);
+            Console.Write("" + ver + " " + rotor2.ToString("00") + " " + ver + "  ");
 
-        Console.SetCursorPosition(26, 9);
-        Console.Write("" + ver + " " + abeceda[0] + " " + ver + "   ");
+            Console.SetCursorPosition(28, 10);
+            Console.Write("" + ver + "    " + ver + "  ");
 
-        Console.SetCursorPosition(26, 10);
-        Console.Write("" + ver + "   " + ver + "   ");
+            Console.SetCursorPosition(28, 11);
+            Console.Write("" + levi + hor + hor + hor + hor + desni + "  ");
 
-        Console.SetCursorPosition(26, 11);
-        Console.Write("" + levi + hor + hor + hor + desni + "   ");
+            Console.SetCursorPosition(28, 12);
+            Console.Write("" + ver + " 25" + " " + ver + "  ");
 
-        Console.SetCursorPosition(26, 12);
-        Console.Write("" + ver + " " + abeceda[25] + " " + ver + "   ");
+            Console.SetCursorPosition(28, 13);
+            Console.Write("" + dLevi + hor + hor + hor + hor + dDesni + "  ");
 
-        Console.SetCursorPosition(26, 13);
-        Console.Write("" + dLevi + hor + hor + hor + dDesni + "   ");
+            //treci rotor
+            Console.SetCursorPosition(20, 5);
+            Console.Write("" + gLevi + hor + hor + hor + hor + gDesni);
 
-        //treci rotor
-        Console.SetCursorPosition(32, 5);
-        Console.Write("" + gLevi + hor + hor + hor + gDesni);
+            Console.SetCursorPosition(20, 6);
+            Console.Write("" + ver + " " + (rotor3 + 1).ToString("00") + " " + ver + "  ");
 
-        Console.SetCursorPosition(32, 6);
-        Console.Write("" + ver + " " + abeceda[1] + " " + ver + "   ");
-        Console.SetCursorPosition(32, 7);
-        Console.Write("" + levi + hor + hor + hor + desni + "   ");
+            Console.SetCursorPosition(20, 7);
+            Console.Write("" + levi + hor + hor + hor + hor + desni + "  ");
 
-        Console.SetCursorPosition(32, 8);
-        Console.Write("" + ver + "   " + ver + "   ");
+            Console.SetCursorPosition(20, 8);
+            Console.Write("" + ver + "    " + ver + "  ");
 
-        Console.SetCursorPosition(32, 9);
-        Console.Write("" + ver + " " + abeceda[0] + " " + ver + "   ");
+            Console.SetCursorPosition(20, 9);
+            Console.Write("" + ver + " " + rotor3.ToString("00") + " " + ver + "  ");
 
-        Console.SetCursorPosition(32, 10);
-        Console.Write("" + ver + "   " + ver + "   ");
+            Console.SetCursorPosition(20, 10);
+            Console.Write("" + ver + "    " + ver + "  ");
 
-        Console.SetCursorPosition(32, 11);
-        Console.Write("" + levi + hor + hor + hor + desni + "   ");
+            Console.SetCursorPosition(20, 11);
+            Console.Write("" + levi + hor + hor + hor + hor + desni + "  ");
 
-        Console.SetCursorPosition(32, 12);
-        Console.Write("" + ver + " " + abeceda[25] + " " + ver + "   ");
+            Console.SetCursorPosition(20, 12);
+            Console.Write("" + ver + " 25" + " " + ver + "  ");
 
-        Console.SetCursorPosition(32, 13);
-        Console.Write("" + dLevi + hor + hor + hor + dDesni + "   ");
-    }
+            Console.SetCursorPosition(20, 13);
+            Console.Write("" + dLevi + hor + hor + hor + hor + dDesni + "  ");           
+        }
+  static void PodesavanjeRotora()
+  {
+    int x = X * 8 + 22;
+    int y = 9;
+                int rotor1 = 0;
+            int rotor2 = 0;
+            int rotor3 = 0;
+            
+            Console.SetCursorPosition(x, y);
+            ConsoleKeyInfo strelica;
+            do
+            {
+                strelica = Console.ReadKey();
+                if (strelica.Key == ConsoleKey.RightArrow)
+                {
+                    if (x != 38)
+                    {
+                        X++;
+                    }
+                }
+                else if (strelica.Key == ConsoleKey.LeftArrow)
+                {
+                    if (x != 22)
+                        X--;
+                }
+                else if (strelica.Key == ConsoleKey.UpArrow)
+                {
+                    if (x == 22)
+                    {
+                        rotor3--;
+                        if (rotor3 == -26) rotor3 = 0;
+                        Console.Write(((rotor3 + 26) % 26).ToString("00"));
+                        Console.SetCursorPosition(22, 6);
+                        Console.Write(((rotor3 + 27) % 26).ToString("00"));
+                        Console.SetCursorPosition(22, 12);
+                        Console.Write(((rotor3 + 25) % 26).ToString("00"));
+                    }
+                    else if (x == 30)
+                    {
+                        rotor2--;
+                        if (rotor2 == -26) rotor2 = 0;
+                        Console.Write(((rotor2 + 26) % 26).ToString("00"));
+                        Console.SetCursorPosition(30, 6);
+                        Console.Write(((rotor2 + 27) % 26).ToString("00"));
+                        Console.SetCursorPosition(30, 12);
+                        Console.Write(((rotor2 + 25) % 26).ToString("00"));
+                    }
+                    else
+                    {
+                        rotor1--;
+                        if (rotor1 == -26) rotor1 = 0;
+                        Console.Write(((rotor1 + 26) % 26).ToString("00"));
+                        Console.SetCursorPosition(38, 6);
+                        Console.Write(((rotor1 + 27) % 26).ToString("00"));
+                        Console.SetCursorPosition(38, 12);
+                        Console.Write(((rotor1 + 25) % 26).ToString("00"));
+                    }
+                }
+                else if(strelica.Key == ConsoleKey.DownArrow)
+                {
+                    if (x == 22)
+                    {
+                        rotor3++;
+                        if (rotor3 == -26) rotor3 = 0;
+                        Console.Write(((rotor3 + 26) % 26).ToString("00"));
+                        Console.SetCursorPosition(22, 6);
+                        Console.Write(((rotor3 + 27) % 26).ToString("00"));
+                        Console.SetCursorPosition(22, 12);
+                        Console.Write(((rotor3 + 25) % 26).ToString("00"));
+                    }
+                    else if (x == 30)
+                    {
+                        rotor2++;
+                        if (rotor2 == -26) rotor2 = 0;
+                        Console.Write(((rotor2 + 26) % 26).ToString("00"));
+                        Console.SetCursorPosition(30, 6);
+                        Console.Write(((rotor2 + 27) % 26).ToString("00"));
+                        Console.SetCursorPosition(30, 12);
+                        Console.Write(((rotor2 + 25) % 26).ToString("00"));
+                    }
+                    else
+                    {
+                        rotor1++;
+                        if (rotor1 == -26) rotor1 = 0;
+                        Console.Write(((rotor1 + 26) % 26).ToString("00"));
+                        Console.SetCursorPosition(38, 6);
+                        Console.Write(((rotor1 + 27) % 26).ToString("00"));
+                        Console.SetCursorPosition(38, 12);
+                        Console.Write(((rotor1 + 25) % 26).ToString("00"));
+                    }
+                }
+                x = X * 8 + 22;
+                Console.SetCursorPosition(x, y);
+            } while (strelica.Key != ConsoleKey.Enter);
+  }
 static void Tastatura()
 {
-    // Console.BackgroundColor = ConsoleColor.White;
-    //Console.ForegroundColor = ConsoleColor.Black;
     char hor = '\u2500', ver = '\u2502';
     char gLevi = '\u250C', gDesni = '\u2510';
     char dLevi = '\u2514', dDesni = '\u2518';
@@ -187,8 +289,6 @@ static void Tastatura()
 }
 static void Plugboard()
 {
-    //Console.BackgroundColor = ConsoleColor.White;
-    //Console.ForegroundColor = ConsoleColor.Black;
     char krug = '\u2B24';
     //prvi red
 
@@ -234,46 +334,8 @@ static void Plugboard()
 }
 static void PodesavanjePlugboard()
 {
-    int x = X * 2 + 20;
-    int y = Y * 2 + 26;
-    Console.SetCursorPosition(x, y);
-    ConsoleKeyInfo strelica;
-    do
-    {
-        strelica = Console.ReadKey();
-        if (strelica.Key == ConsoleKey.RightArrow)
-        {
-            if (x != 36)
-                X++;
-        }
-        else if (strelica.Key == ConsoleKey.LeftArrow)
-        {
-            if (x != 20)
-                X--;
-        }
-        else if (strelica.Key == ConsoleKey.UpArrow)
-        {
-            if (y != 26)
-                Y--;
-        }
-        else if (strelica.Key == ConsoleKey.DownArrow)
-        {
-            if (y == 26)
-            {
-                Y++;
-                x = X * 2 + 21;
-                if (x == 36)
-                    x = X * 2 + 19;
-            }
-            else if (y == 28)
-            {
-                Y++;
-                x = X * 2 + 20;
-            }
-        }
-        y = Y * 2 + 26;
-        Console.SetCursorPosition(x, y);
-    } while (strelica.Key != ConsoleKey.Enter);
+    ConsoleColor[] nizboja = new ConsoleColor [13];
+    char[] slova = new char [26];
 }
 static char UnosSlova()
 {
@@ -300,17 +362,17 @@ static char UnosSlova()
     }
     return slovo;
 }
-static void Main(string[] args)
-{
-    CrtanjeRotora();
-    Tastatura();
-    Plugboard();
-    PodesavanjePlugboard();
-    char slovo;
-    while (true)
-    {
-        slovo = UnosSlova();
-    }
-
-}
+  static void Main(string[] args)
+  {
+      CrtanjeRotora();
+      Tastatura();
+      Plugboard();
+      PodesavanjeRotora();
+      PodesavanjePlugboard();
+      char slovo;
+      while (true)
+      {
+          slovo = UnosSlova();
+      }
+  }
 }
