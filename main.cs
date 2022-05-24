@@ -386,21 +386,22 @@ static void Plugboard( int yPosition )
 }
 static char[] PodesavanjePlugboard()
 {
-    ConsoleColor[] nizboja =     {ConsoleColor.Red,ConsoleColor.Yellow,ConsoleColor.Blue,ConsoleColor.Green,ConsoleColor.Gray,ConsoleColor.Cyan,ConsoleColor.DarkGreen,ConsoleColor.Magenta,ConsoleColor.DarkRed,ConsoleColor.DarkMagenta,ConsoleColor.DarkYellow,ConsoleColor.DarkCyan,ConsoleColor.DarkGray};
+    ConsoleColor[] nizboja =     {ConsoleColor.Red,ConsoleColor.Yellow,ConsoleColor.Blue,ConsoleColor.Green,ConsoleColor.DarkBlue,ConsoleColor.Cyan,ConsoleColor.DarkGreen,ConsoleColor.Magenta,ConsoleColor.DarkRed,ConsoleColor.DarkMagenta,ConsoleColor.DarkYellow,ConsoleColor.DarkCyan,ConsoleColor.DarkGray};
   
     char[] plugboard = abeceda;
     char slovo;
     ConsoleKeyInfo taster;
 
-    int brboje = 0;
-    int brojac = 0;
+    int brBoje = 0;
+    int brojac = 1;
   
     char [] slova= abeceda;
     int [] xAbeceda = {21, 30, 26, 25, 24, 27, 29, 31, 34, 33, 35, 36, 34, 32, 36, 20, 20, 26, 23, 28, 32, 28, 22, 24, 22, 30};
-  int [] yAbeceda = {28,30,30,28,26,28,28,28,26,28,30,30,30,26,30,26,26,26,26,26,30,26,26,30,30,26};
+  int [] yAbeceda = {28,30,30,28,26,28,28,28,26,28,28,30,30,30,26,30,26,26,28,26,26,30,26,30,30,26};
   int index= 0;
   bool uspesno;
   string pom = new string (slova);
+  Console.SetCursorPosition(0,32);
     do
     {
       uspesno = false;
@@ -412,18 +413,21 @@ static char[] PodesavanjePlugboard()
       index = pom.IndexOf(slovo);
       Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
       
-      Console.ForegroundColor = nizboja[brboje];
+      Console.ForegroundColor = nizboja[brBoje];
+      Console.Write('\u2B24');
+      Console.ForegroundColor = ConsoleColor.Black;
       if(brojac%2 == 0)
-        brboje++;
-     if(uspesno)
+        brBoje++;
+     
        brojac++;
-        /* 1. slova svetle kada se unese slovo
+      //zavrsi se program kad dodje do kraja niza boja
+        /* 1. slova svetle kada se unese slovo ZAVRSENO
               1.1 provera ispravnosti unosa i pretvaranje u velika slova
               1.2 kada se pritisne opet slovo koje vec ima boju iskljuce se oba
             2. ako je neka promenljiva = 2 menjaju mesta slovo i prethodno slovo
               2.1 kada se pritisne opet slovo koje vec ima boju zamene mesta na pocetna*/
       
-    }while(brojac<26);
+    }while(brojac<=26);
     return plugboard;
 }
 static char UnosSlova()
