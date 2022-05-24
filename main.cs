@@ -30,7 +30,7 @@ using System;
         static int pozicijaRotora2 = 2;
         static int pozicijaRotora3 = 3;
         static void crtajKvadratSaBrojem( int xPozicija, int yPozicija, int broj )
-		{
+	    	{
             Console.SetCursorPosition( xPozicija, yPozicija );
             Console.Write( "" + gLevi +  hor + hor  + hor  + "" + gDesni );
 
@@ -40,6 +40,37 @@ using System;
             Console.SetCursorPosition( xPozicija, yPozicija +2 );
             Console.Write( "" + dLevi + hor + hor + hor + dDesni + "  " );
         }
+      static void PodesiReflektor( bool jesteGore, ref int reflektor )
+        {
+            if( jesteGore ) reflektor++;
+            else reflektor--;
+            if( reflektor == 3 ) reflektor = 1;
+            else if( reflektor == 0 ) reflektor = 2;
+            Console.Write( reflektor );
+        }
+        static void PodesavanjeReflektora()
+		{
+            int reflektor = 1;
+            Console.SetCursorPosition( 14, 9 );
+            ConsoleKeyInfo strelica;
+            do
+			{
+                strelica = Console.ReadKey();
+                if( strelica.Key == ConsoleKey.UpArrow )
+                {
+                    PodesiReflektor( true, ref reflektor );
+                }
+                else if( strelica.Key == ConsoleKey.DownArrow )
+                {
+                    PodesiReflektor( false, ref reflektor );
+                }
+                Console.SetCursorPosition( 14, 9 );
+            } while( strelica.Key != ConsoleKey.Enter );
+		}
+        static void CrtanjeReflektora(int yPozicija)
+		{
+            crtajKvadratSaBrojem( 12, yPozicija, 1 );
+		}
         static void PodesiPoziciju( bool jesteGore, int xPozicija, ref int pozicijaRotora)
 		{
             if( jesteGore ) pozicijaRotora++;
@@ -353,50 +384,83 @@ static void Plugboard( int yPosition )
         Console.Write("" + krug);
     }
 }
-static void PodesavanjePlugboard()
+static char[] PodesavanjePlugboard()
 {
-    ConsoleColor[] nizboja = new ConsoleColor [13];
-    char[] slova = new char [26];
+    ConsoleColor[] nizboja =     {ConsoleColor.Red,ConsoleColor.Yellow,ConsoleColor.Blue,ConsoleColor.Green,ConsoleColor.Gray,ConsoleColor.Cyan,ConsoleColor.DarkGreen,ConsoleColor.Magenta,ConsoleColor.DarkRed,ConsoleColor.DarkMagenta,ConsoleColor.DarkYellow,ConsoleColor.DarkCyan,ConsoleColor.DarkGray};
+  
+    char[] plugboard = abeceda;
+    char slovo;
+    ConsoleKeyInfo taster;
+
+    int brboje = 0;
+    int brojac = 0;
+  
+    char [] slova= abeceda;
+    int [] xAbeceda = {21, 30, 26, 25, 24, 27, 29, 31, 34, 33, 35, 36, 34, 32, 36, 20, 20, 26, 23, 28, 32, 28, 22, 24, 22, 30};
+  int [] yAbeceda = {28,30,30,28,26,28,28,28,26,28,30,30,30,26,30,26,26,26,26,26,30,26,26,30,30,26};
+  int index= 0;
+  bool uspesno;
+  string pom = new string (slova);
+    do
+    {
+      uspesno = false;
+      Console.SetCursorPosition(0,32);
+      //moram proveru da napisem
+      taster = Console.ReadKey();
+      slovo = Convert.ToChar(taster.KeyChar);
+      Char.ToUpper(slovo);
+      index = pom.IndexOf(slovo);
+      Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
+      
+      Console.ForegroundColor = nizboja[brboje];
+      if(brojac%2 == 0)
+        brboje++;
+     if(uspesno)
+       brojac++;
+        /* 1. slova svetle kada se unese slovo
+              1.1 provera ispravnosti unosa i pretvaranje u velika slova
+              1.2 kada se pritisne opet slovo koje vec ima boju iskljuce se oba
+            2. ako je neka promenljiva = 2 menjaju mesta slovo i prethodno slovo
+              2.1 kada se pritisne opet slovo koje vec ima boju zamene mesta na pocetna*/
+      
+    }while(brojac<26);
+    return plugboard;
 }
 static char UnosSlova()
 {
-    Console.SetCursorPosition( 0, 30 );
-    Console.WriteLine();
-    bool tacnost = false;
-    string red;
-    char slovo = '-';
-    while (!tacnost)
-    {
-        Console.Write("Unesite slovo: ");
-        red = Console.ReadLine();
-        if (red.Length == 1)
-        {
-            slovo = Convert.ToChar(red);
-            if (slovo >= 'A' && slovo <= 'Z')
-            {
-                tacnost = true;
-            }
-            else
-                Console.Write("Greska. ");
-        }
-        else
-            Console.Write("Greska. ");
-    }
-    return slovo;
+  
+  char slovo;
+  ConsoleKeyInfo slovo1;
+  slovo1 = Console.ReadKey();
+  if(slovo1.Key == ConsoleKey.Enter)
+  {
+    return '.';
+    // kada unese enter je kraj Unosa
+  }
+  slovo = Convert.ToChar(slovo1.KeyChar);
+  if(slovo <'A'||slovo>'Z')
+  {
+    slovo = '-';
+    // kada se bude unelo neispravno slovo vratice se '-' koji ce pri obradi biti zaobidjen
+  }
+  return slovo;
+  
 }
-        static void Main(string[] args)
-        {
+    static void Ispis(char slovo)
+    {
+        //mare
+    }
+    static void Main(string[] args)
+    {
             PozicijeRotora(2);
+            CrtanjeReflektora(8);
             CrtanjeRotora(5);
             Tastatura(15);
             Plugboard(25);
+            PodesavanjeReflektora();
             PodesavanjePozicija();
             PodesavanjeRotora();
             PodesavanjePlugboard();
-            char slovo;
-            while (true)
-            {
-                 slovo = UnosSlova();
-            }
-        }
-    }
+      
+   }
+}
