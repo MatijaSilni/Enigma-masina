@@ -399,25 +399,34 @@ class Program
         int[] xAbeceda = { 21, 30, 26, 25, 24, 27, 29, 31, 34, 33, 35, 36, 34, 32, 36, 20, 20, 26, 23, 28, 32, 28, 22, 24, 22, 30 };
         int[] yAbeceda = { 28, 30, 30, 28, 26, 28, 28, 28, 26, 28, 28, 30, 30, 30, 26, 30, 26, 26, 28, 26, 26, 30, 26, 30, 30, 26 };
         int index = 0;
-        bool uspesno;
         string pom = new string(slova);
         Console.SetCursorPosition(0, 32);
+      char prethodni;
         do
         {
-            uspesno = false;
             Console.SetCursorPosition(0, 32);
             //moram proveru da napisem
             taster = Console.ReadKey();
             slovo = Convert.ToChar(taster.KeyChar);
-            Char.ToUpper(slovo);
+            slovo = Char.ToUpper(slovo);
             index = pom.IndexOf(slovo);
             Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
-
             Console.ForegroundColor = nizboja[brBoje];
             Console.Write('\u2B24');
+            prethodni = slovo;
+            if(brojac%2 ==0 )
+            {
+              slova[pom.IndexOf(prethodni)] = slovo;
+              slova[pom.IndexOf(slovo)] = prethodni;
+            }
+          
             Console.ForegroundColor = ConsoleColor.Black;
+            
             if (brojac % 2 == 0)
-                brBoje++;
+            {
+              brBoje++;
+              
+            }   
 
             brojac++;
             //zavrsi se program kad dodje do kraja niza boja
