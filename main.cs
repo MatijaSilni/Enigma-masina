@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 class Program
 {
@@ -15,11 +16,11 @@ class Program
     static int X = 2, Y = 0;
 
     static int[,] rotori =
-    {{ 4, 10, 12, 5, 11, 6, 3, 16, 21, 25, 13, 19, 14, 22, 24, 7, 23, 20, 18, 15, 0, 8, 1, 17, 2, 9, /*zarez*/16},
-        { 0, 9, 3, 10, 18, 8, 17, 20, 23, 1, 11, 7, 22, 19, 12, 2, 16, 6, 25, 13, 15, 24, 5, 21, 14, 4, /*zarez*/4},
-        { 1, 3, 5, 7, 9, 11, 2, 15, 17, 19, 23, 21, 25, 13, 24, 4, 8, 22, 6, 0, 10, 12, 20, 18, 16, 14, /*zarez*/21},
-        { 4, 18, 14, 21, 15, 25, 9, 0, 24, 16, 20, 8, 17, 7, 23, 11, 13, 5, 19, 6, 10, 3, 2, 12, 22, 1, /*zarez*/9},
-        { 21, 25, 1, 17, 6, 8, 19, 24, 20, 15, 18, 3, 13, 7, 11, 23, 0, 22, 12, 9, 16, 14, 5, 4, 2, 10, /*zarez*/25}};
+    {{ 4, 10, 12, 5, 11, 6, 3, 16, 21, 25, 13, 19, 14, 22, 24, 7, 23, 20, 18, 15, 0, 8, 1, 17, 2, 9, /*zasek*/16},
+        { 0, 9, 3, 10, 18, 8, 17, 20, 23, 1, 11, 7, 22, 19, 12, 2, 16, 6, 25, 13, 15, 24, 5, 21, 14, 4, /*zasek*/4},
+        { 1, 3, 5, 7, 9, 11, 2, 15, 17, 19, 23, 21, 25, 13, 24, 4, 8, 22, 6, 0, 10, 12, 20, 18, 16, 14, /*zasek*/21},
+        { 4, 18, 14, 21, 15, 25, 9, 0, 24, 16, 20, 8, 17, 7, 23, 11, 13, 5, 19, 6, 10, 3, 2, 12, 22, 1, /*zasek*/9},
+        { 21, 25, 1, 17, 6, 8, 19, 24, 20, 15, 18, 3, 13, 7, 11, 23, 0, 22, 12, 9, 16, 14, 5, 4, 2, 10, /*zasek*/25}};
     static int[] prviReflektor = { 'Y', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'A', 'T' };
     static char[] drugiReflektor = { 'F', 'V', 'P', 'J', 'I', 'A', 'O', 'Y', 'E', 'D', 'R', 'Z', 'X', 'W', 'G', 'C', 'T', 'K', 'U', 'Q', 'S', 'B', 'N', 'M', 'H', 'L' };
 
@@ -27,9 +28,7 @@ class Program
     static int rotor2 = 0;
     static int rotor3 = 0;
 
-    static int pozicijaRotora1 = 1;
-    static int pozicijaRotora2 = 2;
-    static int pozicijaRotora3 = 3;
+    static int[] pozicijeRotora = {1,2,3};
     static void crtajKvadratSaBrojem(int xPozicija, int yPozicija, int broj)
     {
         Console.SetCursorPosition(xPozicija, yPozicija);
@@ -41,6 +40,7 @@ class Program
         Console.SetCursorPosition(xPozicija, yPozicija + 2);
         Console.Write("" + dLevi + hor + hor + hor + dDesni + "  ");
     }
+  //REFLEKTOR
     static void PodesiReflektor(bool jesteGore, ref int reflektor)
     {
         if (jesteGore) reflektor++;
@@ -72,6 +72,7 @@ class Program
     {
         crtajKvadratSaBrojem(12, yPozicija, 1);
     }
+  //PODESAVANJA REDOSLEDNIH POZICIJA ROTORA
     static void PodesiPoziciju(bool jesteGore, int xPozicija, ref int pozicijaRotora)
     {
         if (jesteGore) pozicijaRotora++;
@@ -80,7 +81,7 @@ class Program
         else if (pozicijaRotora == 0) pozicijaRotora = 5;
         Console.Write(pozicijaRotora);
     }
-    static void PodesavanjePozicija()
+    static int[,] PodesavanjePozicija()
     {
         int x = X * 8 + 22;
         int y = 3;
@@ -106,49 +107,50 @@ class Program
             {
                 if (x == 22)
                 {
-                    PodesiPoziciju(true, x, ref pozicijaRotora3);
+                    PodesiPoziciju(true, x, ref pozicijeRotora[2]);
                 }
                 else if (x == 30)
                 {
-                    PodesiPoziciju(true, x, ref pozicijaRotora2);
+                    PodesiPoziciju(true, x, ref pozicijeRotora[1]);
                 }
                 else
                 {
-                    PodesiPoziciju(true, x, ref pozicijaRotora1);
+                    PodesiPoziciju(true, x, ref pozicijeRotora[0]);
                 }
             }
             else if (strelica.Key == ConsoleKey.DownArrow)
             {
                 if (x == 22)
                 {
-                    PodesiPoziciju(false, x, ref pozicijaRotora3);
+                    PodesiPoziciju(false, x, ref pozicijeRotora[2]);
                 }
                 else if (x == 30)
                 {
-                    PodesiPoziciju(false, x, ref pozicijaRotora2);
+                    PodesiPoziciju(false, x, ref pozicijeRotora[1]);
                 }
                 else
                 {
-                    PodesiPoziciju(false, x, ref pozicijaRotora1);
+                    PodesiPoziciju(false, x, ref pozicijeRotora[0]);
                 }
             }
             x = X * 8 + 22;
             Console.SetCursorPosition(x, y);
         } while (strelica.Key != ConsoleKey.Enter);
+      return UpotrebljeniRotori(pozicijeRotora);
     }
     static void PozicijeRotora(int yPozicija)
     {
-        int[] rotori = { 1, 2, 3, 4, 5 };
         //biranje prvog rotora
-        crtajKvadratSaBrojem(36, yPozicija, rotori[0]);
+        crtajKvadratSaBrojem(36, yPozicija, pozicijeRotora[0]);
 
         //biranje drugog rotora
-        crtajKvadratSaBrojem(28, yPozicija, rotori[1]);
+        crtajKvadratSaBrojem(28, yPozicija, pozicijeRotora[1]);
 
         //biranje treceg rotora
-        crtajKvadratSaBrojem(20, yPozicija, rotori[2]);
+        crtajKvadratSaBrojem(20, yPozicija, pozicijeRotora[2]);
 
     }
+  //BIRANJE POCETNIH VREDNOSTI ZA ROTORE
     static void CrtajRotor(int xPozicija, int yPozicija, int rotor)
     {
         Console.SetCursorPosition(xPozicija, yPozicija);
@@ -178,16 +180,16 @@ class Program
         Console.SetCursorPosition(xPozicija, yPozicija + 8);
         Console.Write("" + dLevi + hor + hor + hor + dDesni);
     }
-    static void CrtanjeRotora(int yPosition)
+    static void CrtanjeRotora(int yPozicija)
     {
         //prvi rotor
-        CrtajRotor(36, yPosition, rotor1);
+        CrtajRotor(36, yPozicija, rotor1);
 
         //drugi rotor
-        CrtajRotor(28, yPosition, rotor2);
+        CrtajRotor(28, yPozicija, rotor2);
 
         //treci rotor
-        CrtajRotor(20, yPosition, rotor3);
+        CrtajRotor(20, yPozicija, rotor3);
 
     }
     static void PodesiRotor(bool jesteGore, int xPozicija, ref int rotor)
@@ -255,8 +257,9 @@ class Program
             }
             x = X * 8 + 22;
             Console.SetCursorPosition(x, y);
-        } while (strelica.Key != ConsoleKey.Enter);
+        } while (strelica.Key != ConsoleKey.Enter);     
     }
+  //SVETLECA TASTATURA
     static void Tastatura(int yPosition)
     {
         char hor = '\u2500', ver = '\u2502';
@@ -338,7 +341,49 @@ class Program
             Console.Write("" + hor + hor + donji + hor);
         }
         Console.Write("" + hor + hor + dDesni);
-    }
+    }static void Svetla(int yPosition, int broj)
+        {
+            char slovo = abeceda[broj];
+            for (int i = 0; i < 9; i++)
+            {
+                if (slovo == prviRed[i])
+                {
+                    Console.SetCursorPosition(11 + (i * 4), yPosition + 1);
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(" " + slovo + " ");
+                    Thread.Sleep(100);
+                    Console.SetCursorPosition(11 + (i * 4), yPosition + 1);
+                    Console.BackgroundColor = default;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(" " + slovo + " ");
+                }
+                else if (i < 8 && slovo == drugiRed[i])
+                {
+                    Console.SetCursorPosition(13 + (i * 4), yPosition + 4);
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(" " + slovo + " ");
+                    Thread.Sleep(100);
+                    Console.SetCursorPosition(13 + (i * 4), yPosition + 4);
+                    Console.BackgroundColor = default;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(" " + slovo + " ");
+                }
+                else if (slovo == treciRed[i])
+                {
+                    Console.SetCursorPosition(11 + (i * 4), yPosition + 7);
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(" " + slovo + " ");
+                    Thread.Sleep(100);
+                    Console.SetCursorPosition(11 + (i * 4), yPosition + 7);
+                    Console.BackgroundColor = default;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(" " + slovo + " ");
+                }
+            }
+        }
     static void Plugboard(int yPosition)
     {
         char krug = '\u2B24';
@@ -476,6 +521,7 @@ class Program
         CrtanjeReflektora(8);
         CrtanjeRotora(5);
         Tastatura(15);
+        Svetla(15, 5);
         Plugboard(25);
         PodesavanjeReflektora();
         PodesavanjePozicija();
