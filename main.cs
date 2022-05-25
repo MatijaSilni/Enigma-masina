@@ -431,8 +431,7 @@ class Program
     }
     static char[] PodesavanjePlugboard()
     {
-        ConsoleColor[] nizboja = { ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Green, ConsoleColor.DarkBlue, ConsoleColor.Cyan, ConsoleColor.DarkGreen, ConsoleColor.Magenta, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.DarkYellow, ConsoleColor.DarkCyan, ConsoleColor.DarkGray };
-
+        ConsoleColor[] nizBoja = { ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Green, ConsoleColor.DarkBlue, ConsoleColor.Cyan, ConsoleColor.DarkGreen, ConsoleColor.Magenta, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.DarkYellow, ConsoleColor.DarkCyan, ConsoleColor.DarkGray };
         char[] plugboard = abeceda;
         char slovo;
         ConsoleKeyInfo taster;
@@ -440,48 +439,65 @@ class Program
         int brBoje = 0;
         int brojac = 1;
 
-        char[] slova = abeceda;
         int[] xAbeceda = { 21, 30, 26, 25, 24, 27, 29, 31, 34, 33, 35, 36, 34, 32, 36, 20, 20, 26, 23, 28, 32, 28, 22, 24, 22, 30 };
         int[] yAbeceda = { 28, 30, 30, 28, 26, 28, 28, 28, 26, 28, 28, 30, 30, 30, 26, 30, 26, 26, 28, 26, 26, 30, 26, 30, 30, 26 };
         int index = 0;
-        string pom = new string(slova);
-        Console.SetCursorPosition(0, 32);
-      char prethodni;
+        string pom = new string(abeceda);
+        char prethodni = ' ';
+        string pomPlug = new string (plugboard);
         do
         {
+            pomPlug = new string(plugboard);
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 32);
             //moram proveru da napisem
             taster = Console.ReadKey();
+            if (taster.Key == ConsoleKey.Enter)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                break;
+            }
+            
             slovo = Convert.ToChar(taster.KeyChar);
             slovo = Char.ToUpper(slovo);
             index = pom.IndexOf(slovo);
-            Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
-            Console.ForegroundColor = nizboja[brBoje];
-            Console.Write('\u2B24');
-            prethodni = slovo;
-            if(brojac%2 ==0 )
+            Console.WriteLine(index + " " + pomPlug.IndexOf(slovo));
+            if ((index != pomPlug.IndexOf(slovo) && brojac>2)||prethodni == slovo)
             {
-              slova[pom.IndexOf(prethodni)] = slovo;
-              slova[pom.IndexOf(slovo)] = prethodni;
+                plugboard[index] = slovo;
+                Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write('\u2B24');
+                brojac -= 2;
             }
-          
-            Console.ForegroundColor = ConsoleColor.Black;
+            else if (brojac % 2 == 0)
+            {
+                plugboard[pom.IndexOf(prethodni)] = slovo;
+                plugboard[pom.IndexOf(slovo)] = prethodni;
+                Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
+                Console.ForegroundColor = nizBoja[brBoje];
+                Console.Write('\u2B24');
+            }
+            else
+            {
+                Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
+                Console.ForegroundColor = nizBoja[brBoje];
+                Console.Write('\u2B24');
+            }
+                prethodni = slovo;
             
             if (brojac % 2 == 0)
             {
-              brBoje++;
-              
-            }   
-
+                brBoje++;
+            }
             brojac++;
             //zavrsi se program kad dodje do kraja niza boja
             /* 1. slova svetle kada se unese slovo ZAVRSENO
                 1.1 provera ispravnosti unosa i pretvaranje u velika slova
                 1.2 kada se pritisne opet slovo koje vec ima boju iskljuce se oba
-              2. ako je neka promenljiva = 2 menjaju mesta slovo i prethodno slovo
+              2. ako je neka promenljiva = 2 menjaju mesta slovo i prethodno slovo gotovo
                 2.1 kada se pritisne opet slovo koje vec ima boju zamene mesta na pocetna*/
-
-        } while (brojac <= 26);
+        } while (true);
         return plugboard;
     }
     static char UnosSlova()
