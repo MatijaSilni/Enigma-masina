@@ -567,11 +567,6 @@ class Program
     static int[,] UpotrebljeniRotori(int[] rotor)
     {
         int[,] _trenutniRotori = new int[3, 27];
-
-
-
-
-      
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 27; j++)
                 _trenutniRotori[i, j] = rotori[rotor[i] - 1, j];
