@@ -1,3 +1,5 @@
+
+
 using System;
 using System.Threading;
 
@@ -439,7 +441,8 @@ class Program
             Console.Write("" + krug);
         }
     }
-    static void PodesavanjePlugboard()
+  //PODESAVANJE PLUGBOARDA  
+  static void PodesavanjePlugboard()
     {
         ConsoleColor[] nizBoja = { ConsoleColor.Red, ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Blue, ConsoleColor.Green, ConsoleColor.Green, ConsoleColor.DarkBlue, ConsoleColor.DarkBlue, ConsoleColor.Cyan, ConsoleColor.Cyan, ConsoleColor.DarkGreen, ConsoleColor.DarkGreen, ConsoleColor.Magenta, ConsoleColor.Magenta, ConsoleColor.DarkRed, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.DarkMagenta, ConsoleColor.DarkYellow, ConsoleColor.DarkYellow, ConsoleColor.DarkCyan, ConsoleColor.DarkCyan, ConsoleColor.DarkGray, ConsoleColor.DarkGray };      
         char slovo;
@@ -529,28 +532,46 @@ class Program
         } while (taster.Key != ConsoleKey.Enter);
         Console.ForegroundColor = ConsoleColor.White;
     }
+    static int xUnos = 0, yUnos = 35;
+    static int xIspis = 30, yIspis = 35;
+  
     static char UnosSlova()
     {
-
+      //razmaci  
+      if (xUnos == 5 || xUnos == 11)
+            xUnos++;
+      //kraj reda  
+      if (xUnos == 17)
+        {
+            yUnos++;
+            xUnos = 0;
+        }
+        Console.SetCursorPosition(xUnos,yUnos);
         char slovo;
-        ConsoleKeyInfo slovo1;
-        slovo1 = Console.ReadKey();
-        if (slovo1.Key == ConsoleKey.Enter)
+        ConsoleKeyInfo taster;
+        taster = Console.ReadKey();
+        if(taster.KeyChar < 'A' || taster.KeyChar > 'Z' && taster.KeyChar < 'a' || taster.KeyChar > 'z')
         {
-            return '.';
-            // kada unese enter je kraj Unosa
+          if (taster.Key == ConsoleKey.Enter)
+            // ako korisnik unese enter metoda ce vratiti '.' sto oznacava kraj unosa
+            return '.';  
+          // ako korisnik unese nesto sto nije slovo metoda ce vratiti '-' sto ce se zanemariti pri sifrovanju i ispisu
+          else
+            return '-';
         }
-        slovo = Convert.ToChar(slovo1.KeyChar);
-        if (slovo < 'A' || slovo > 'Z')
-        {
-            slovo = '-';
-            // kada se bude unelo neispravno slovo vratice se '-' koji ce pri obradi biti zaobidjen
-        }
+        
+        slovo = Convert.ToChar(taster.KeyChar);
+        xUnos++;
         return slovo;
     }
     static int[,] UpotrebljeniRotori(int[] rotor)
     {
         int[,] _trenutniRotori = new int[3, 27];
+
+
+
+
+      
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 27; j++)
                 _trenutniRotori[i, j] = rotori[rotor[i] - 1, j];
@@ -558,7 +579,23 @@ class Program
     }
     static void Ispis(char slovo)
     {
-        //mare
+        if (xIspis  == 35 || xIspis == 41)
+        {
+            xIspis++;
+        }
+        if (xIspis == 47)
+        {
+            yIspis++;
+            xIspis = 30;
+        }
+        Console.SetCursorPosition(xIspis, yIspis);
+        if (slovo == '-')
+            Console.Write("");
+        else
+        {
+            Console.Write(slovo);
+            xIspis++;
+        }
     }
     static void Main(string[] args)
     {
@@ -572,5 +609,16 @@ class Program
         PodesavanjePozicija();
         PodesavanjeRotora();
         PodesavanjePlugboard();
+        char slovo;
+        Console.SetCursorPosition(0, 34);
+        Console.Write("UNOS: ");
+        Console.SetCursorPosition(30, 34);
+        Console.Write("ISPIS: ");
+        do
+        {
+            slovo = UnosSlova();
+          // slovo treba da se sifruje OVDE pa da se stavi u ispis
+            Ispis(slovo);
+        } while (slovo != '.');
     }
 }
