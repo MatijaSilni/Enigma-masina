@@ -14,7 +14,9 @@ class Program
 
     static char[] abeceda = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
     static int X = 2, Y = 0;
-
+    static int[] plugboard = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 };
+    static bool[] Ukljuceno = new bool[26];
+    static int[] bojaAbc = PopuniNizBrojem(26,-1);
     static int[,] rotori =
     {{ 4, 10, 12, 5, 11, 6, 3, 16, 21, 25, 13, 19, 14, 22, 24, 7, 23, 20, 18, 15, 0, 8, 1, 17, 2, 9, /*zasek*/16},
         { 0, 9, 3, 10, 18, 8, 17, 20, 23, 1, 11, 7, 22, 19, 12, 2, 16, 6, 25, 13, 15, 24, 5, 21, 14, 4, /*zasek*/4},
@@ -28,7 +30,7 @@ class Program
     static int rotor2 = 0;
     static int rotor3 = 0;
 
-    static int[] pozicijeRotora = {1,2,3};
+    static int[] pozicijeRotora = { 1, 2, 3 };
     static void crtajKvadratSaBrojem(int xPozicija, int yPozicija, int broj)
     {
         Console.SetCursorPosition(xPozicija, yPozicija);
@@ -40,7 +42,14 @@ class Program
         Console.SetCursorPosition(xPozicija, yPozicija + 2);
         Console.Write("" + dLevi + hor + hor + hor + dDesni + "  ");
     }
-  //REFLEKTOR
+    private static int[] PopuniNizBrojem(int duzina, int cifra)
+    {
+        int[] a = new int[duzina];
+        for (int i = 0; i < 26; i++)
+            a[i] = cifra;
+        return a;
+    }
+    //REFLEKTOR
     static void PodesiReflektor(bool jesteGore, ref int reflektor)
     {
         if (jesteGore) reflektor++;
@@ -72,7 +81,7 @@ class Program
     {
         crtajKvadratSaBrojem(12, yPozicija, 1);
     }
-  //PODESAVANJA REDOSLEDNIH POZICIJA ROTORA
+    //PODESAVANJA REDOSLEDNIH POZICIJA ROTORA
     static void PodesiPoziciju(bool jesteGore, int xPozicija, ref int pozicijaRotora)
     {
         if (jesteGore) pozicijaRotora++;
@@ -136,7 +145,7 @@ class Program
             x = X * 8 + 22;
             Console.SetCursorPosition(x, y);
         } while (strelica.Key != ConsoleKey.Enter);
-      return UpotrebljeniRotori(pozicijeRotora);
+        return UpotrebljeniRotori(pozicijeRotora);
     }
     static void PozicijeRotora(int yPozicija)
     {
@@ -150,7 +159,7 @@ class Program
         crtajKvadratSaBrojem(20, yPozicija, pozicijeRotora[2]);
 
     }
-  //BIRANJE POCETNIH VREDNOSTI ZA ROTORE
+    //BIRANJE POCETNIH VREDNOSTI ZA ROTORE
     static void CrtajRotor(int xPozicija, int yPozicija, int rotor)
     {
         Console.SetCursorPosition(xPozicija, yPozicija);
@@ -257,9 +266,9 @@ class Program
             }
             x = X * 8 + 22;
             Console.SetCursorPosition(x, y);
-        } while (strelica.Key != ConsoleKey.Enter);     
+        } while (strelica.Key != ConsoleKey.Enter);
     }
-  //SVETLECA TASTATURA
+    //SVETLECA TASTATURA
     static void Tastatura(int yPosition)
     {
         char hor = '\u2500', ver = '\u2502';
@@ -341,49 +350,50 @@ class Program
             Console.Write("" + hor + hor + donji + hor);
         }
         Console.Write("" + hor + hor + dDesni);
-    }static void Svetla(int yPosition, int broj)
+    }
+    static void Svetla(int yPosition, int broj)
+    {
+        char slovo = abeceda[broj];
+        for (int i = 0; i < 9; i++)
         {
-            char slovo = abeceda[broj];
-            for (int i = 0; i < 9; i++)
+            if (slovo == prviRed[i])
             {
-                if (slovo == prviRed[i])
-                {
-                    Console.SetCursorPosition(11 + (i * 4), yPosition + 1);
-                    Console.BackgroundColor = ConsoleColor.DarkYellow;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write(" " + slovo + " ");
-                    Thread.Sleep(100);
-                    Console.SetCursorPosition(11 + (i * 4), yPosition + 1);
-                    Console.BackgroundColor = default;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(" " + slovo + " ");
-                }
-                else if (i < 8 && slovo == drugiRed[i])
-                {
-                    Console.SetCursorPosition(13 + (i * 4), yPosition + 4);
-                    Console.BackgroundColor = ConsoleColor.DarkYellow;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write(" " + slovo + " ");
-                    Thread.Sleep(100);
-                    Console.SetCursorPosition(13 + (i * 4), yPosition + 4);
-                    Console.BackgroundColor = default;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(" " + slovo + " ");
-                }
-                else if (slovo == treciRed[i])
-                {
-                    Console.SetCursorPosition(11 + (i * 4), yPosition + 7);
-                    Console.BackgroundColor = ConsoleColor.DarkYellow;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write(" " + slovo + " ");
-                    Thread.Sleep(100);
-                    Console.SetCursorPosition(11 + (i * 4), yPosition + 7);
-                    Console.BackgroundColor = default;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(" " + slovo + " ");
-                }
+                Console.SetCursorPosition(11 + (i * 4), yPosition + 1);
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" " + slovo + " ");
+                Thread.Sleep(100);
+                Console.SetCursorPosition(11 + (i * 4), yPosition + 1);
+                Console.BackgroundColor = default;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" " + slovo + " ");
+            }
+            else if (i < 8 && slovo == drugiRed[i])
+            {
+                Console.SetCursorPosition(13 + (i * 4), yPosition + 4);
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" " + slovo + " ");
+                Thread.Sleep(100);
+                Console.SetCursorPosition(13 + (i * 4), yPosition + 4);
+                Console.BackgroundColor = default;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" " + slovo + " ");
+            }
+            else if (slovo == treciRed[i])
+            {
+                Console.SetCursorPosition(11 + (i * 4), yPosition + 7);
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" " + slovo + " ");
+                Thread.Sleep(100);
+                Console.SetCursorPosition(11 + (i * 4), yPosition + 7);
+                Console.BackgroundColor = default;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" " + slovo + " ");
             }
         }
+    }
     static void Plugboard(int yPosition)
     {
         char krug = '\u2B24';
@@ -429,76 +439,95 @@ class Program
             Console.Write("" + krug);
         }
     }
-    static char[] PodesavanjePlugboard()
+    static void PodesavanjePlugboard()
     {
-        ConsoleColor[] nizBoja = { ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Green, ConsoleColor.DarkBlue, ConsoleColor.Cyan, ConsoleColor.DarkGreen, ConsoleColor.Magenta, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.DarkYellow, ConsoleColor.DarkCyan, ConsoleColor.DarkGray };
-        char[] plugboard = abeceda;
+        ConsoleColor[] nizBoja = { ConsoleColor.Red, ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Blue, ConsoleColor.Green, ConsoleColor.Green, ConsoleColor.DarkBlue, ConsoleColor.DarkBlue, ConsoleColor.Cyan, ConsoleColor.Cyan, ConsoleColor.DarkGreen, ConsoleColor.DarkGreen, ConsoleColor.Magenta, ConsoleColor.Magenta, ConsoleColor.DarkRed, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.DarkMagenta, ConsoleColor.DarkYellow, ConsoleColor.DarkYellow, ConsoleColor.DarkCyan, ConsoleColor.DarkCyan, ConsoleColor.DarkGray, ConsoleColor.DarkGray };      
         char slovo;
         ConsoleKeyInfo taster;
-
-        int brBoje = 0;
-        int brojac = 1;
-
         int[] xAbeceda = { 21, 30, 26, 25, 24, 27, 29, 31, 34, 33, 35, 36, 34, 32, 36, 20, 20, 26, 23, 28, 32, 28, 22, 24, 22, 30 };
         int[] yAbeceda = { 28, 30, 30, 28, 26, 28, 28, 28, 26, 28, 28, 30, 30, 30, 26, 30, 26, 26, 28, 26, 26, 30, 26, 30, 30, 26 };
-        int index = 0;
-        string pom = new string(abeceda);
-        char prethodni = ' ';
-        string pomPlug = new string (plugboard);
         do
         {
-            pomPlug = new string(plugboard);
-            Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 32);
-            //moram proveru da napisem
             taster = Console.ReadKey();
-            if (taster.Key == ConsoleKey.Enter)
+            if ((taster.KeyChar < 'A' || taster.KeyChar > 'Z') && (taster.KeyChar < 'a' || taster.KeyChar > 'z') || taster.Key == ConsoleKey.Enter)
             {
+                continue;
+            }
+            slovo = Char.ToUpper(Convert.ToChar(taster.KeyChar));
+            if (bojaAbc[slovo - 'A'] == -1)//SLUCAJ KADA JE KRUZIC ISPOD SLOVA NEOBOJEN
+            {
+                for (int i = 0; i < 26; i++)//TRAZI SE PRVA BOJA KOJOM BI SE KRUZIC MOGAO OBOJATI
+                    if (!Ukljuceno[i])
+                    {
+                        bojaAbc[slovo - 'A'] = i;
+                        Ukljuceno[i] = true;
+                        Console.SetCursorPosition(xAbeceda[slovo - 'A'], yAbeceda[slovo - 'A']);
+                        Console.ForegroundColor = nizBoja[i];
+                        Console.Write('\u2B24');
+                        if (i % 2 == 1)//UKOLIKO JE OVO DRUGI PUT DA SE KORISTI ISTA BOJA ZAMENJUJU SE VREDNOSTI
+                        {
+                            for (int j = 0; j < 26; j++)
+                                if (bojaAbc[j] == i - 1)
+                                {
+                                    int pom = plugboard[slovo - 'A'];
+                                    plugboard[slovo - 'A'] = plugboard[j];
+                                    plugboard[j] = pom;
+                                    break;
+                                }
+                        }
+                        else if (Ukljuceno[i + 1])
+                        {
+                            for (int j = 0; j < 26; j++)
+                                if (bojaAbc[j] == i + 1)
+                                {
+                                    int pom = plugboard[slovo - 'A'];
+                                    plugboard[slovo - 'A'] = plugboard[j];
+                                    plugboard[j] = pom;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+            }
+            else if (bojaAbc[slovo - 'A'] != -1)
+            {
+                if (bojaAbc[slovo - 'A'] % 2 == 0)
+                {
+                    if (Ukljuceno[bojaAbc[slovo - 'A']] && Ukljuceno[bojaAbc[slovo - 'A'] + 1])
+                    {
+                        for (int j = 0; j < 26; j++)
+                            if (bojaAbc[j] == bojaAbc[slovo - 'A'] + 1)
+                            {
+                                int pom = plugboard[slovo - 'A'];
+                                plugboard[slovo - 'A'] = plugboard[j];
+                                plugboard[j] = pom;
+                                break;
+                            }
+                    }
+                }
+                else
+                {
+                    if (Ukljuceno[bojaAbc[slovo - 'A']] && Ukljuceno[bojaAbc[slovo - 'A'] - 1])
+                    {
+                        for (int j = 0; j < 26; j++)
+                            if (bojaAbc[j] == bojaAbc[slovo - 'A'] - 1)
+                            {
+                                int pom = plugboard[slovo - 'A'];
+                                plugboard[slovo - 'A'] = plugboard[j];
+                                plugboard[j] = pom;
+                                break;
+                            }
+                    }
+                }
+                Ukljuceno[bojaAbc[slovo - 'A']] = false;
+                bojaAbc[slovo - 'A'] = -1;
+                Console.SetCursorPosition(xAbeceda[slovo - 'A'], yAbeceda[slovo - 'A']);
                 Console.ForegroundColor = ConsoleColor.White;
-                break;
-            }
-            
-            slovo = Convert.ToChar(taster.KeyChar);
-            slovo = Char.ToUpper(slovo);
-            index = pom.IndexOf(slovo);
-            Console.WriteLine(index + " " + pomPlug.IndexOf(slovo));
-            if ((index != pomPlug.IndexOf(slovo) && brojac>2)||prethodni == slovo)
-            {
-                plugboard[index] = slovo;
-                Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write('\u2B24');
-                brojac -= 2;
-            }
-            else if (brojac % 2 == 0)
-            {
-                plugboard[pom.IndexOf(prethodni)] = slovo;
-                plugboard[pom.IndexOf(slovo)] = prethodni;
-                Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
-                Console.ForegroundColor = nizBoja[brBoje];
                 Console.Write('\u2B24');
             }
-            else
-            {
-                Console.SetCursorPosition(xAbeceda[index], yAbeceda[index]);
-                Console.ForegroundColor = nizBoja[brBoje];
-                Console.Write('\u2B24');
-            }
-                prethodni = slovo;
-            
-            if (brojac % 2 == 0)
-            {
-                brBoje++;
-            }
-            brojac++;
-            //zavrsi se program kad dodje do kraja niza boja
-            /* 1. slova svetle kada se unese slovo ZAVRSENO
-                1.1 provera ispravnosti unosa i pretvaranje u velika slova
-                1.2 kada se pritisne opet slovo koje vec ima boju iskljuce se oba
-              2. ako je neka promenljiva = 2 menjaju mesta slovo i prethodno slovo gotovo
-                2.1 kada se pritisne opet slovo koje vec ima boju zamene mesta na pocetna*/
-        } while (true);
-        return plugboard;
+        } while (taster.Key != ConsoleKey.Enter);
+        Console.ForegroundColor = ConsoleColor.White;
     }
     static char UnosSlova()
     {
@@ -521,11 +550,11 @@ class Program
     }
     static int[,] UpotrebljeniRotori(int[] rotor)
     {
-      int[,] trenutniRotori = new int[3,27];
+        int[,] _trenutniRotori = new int[3, 27];
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 27; j++)
-                trenutniRotori[i, j] = rotori[rotor[i], j];
-        return trenutniRotori;
+                _trenutniRotori[i, j] = rotori[rotor[i] - 1, j];
+        return _trenutniRotori;
     }
     static void Ispis(char slovo)
     {
