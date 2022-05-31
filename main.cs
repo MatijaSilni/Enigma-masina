@@ -35,41 +35,49 @@ class Program
         static int[] pozicijeRotora = { 1, 2, 3 };
         static void Informacije(int yPozicija)
         {
+            string[] podesavanje = { "model reflektora", "pozicije rotora", "pocetne vrednosti rotora", "plugboard", "unos" };
+            string[] tasteri = { "F1", "F2", "F3", "F4", "ENTER" };
+            string linija = "--------------------------+-------";
+            //space, enter, esc - zavrsavanje programa, tab, backspace
             Console.SetCursorPosition(20, yPozicija);
             Console.WriteLine("ENIGMA MASINA M3");
             Console.SetCursorPosition(2, yPozicija + 2);
-            Console.WriteLine("Za podesavanje modela reflektora: ");
-            Console.SetCursorPosition(2, yPozicija + 3);
-            Console.WriteLine("Za podesavanje pozicije rotora: ");
-            Console.SetCursorPosition(2, yPozicija + 4);
-            Console.WriteLine("Za podesavanje pocetnih pozicija rotora: ");
-            Console.SetCursorPosition(2, yPozicija + 5);
-            Console.WriteLine("Za podesavanje plugboarda: ");
-            Console.SetCursorPosition(2, yPozicija + 7);
+            Console.WriteLine("{0, -25} | {1, 7}", "Podesavanje", "Taster");
+            for (int i = 0; i < podesavanje.Length; i++)
+            {
+                Console.WriteLine("  " + linija);
+                Console.WriteLine("  {0,-25} | {1,6}", podesavanje[i], tasteri[i]);
+            }
+            Console.SetCursorPosition(2, yPozicija + 15);
             Console.Write("Da li zelite da sifrujete ili desifrujete poruku? (s/d) ");
-            /*char sifra;
-            sifra = Convert.ToChar(Console.Read());
-            sifra = char.ToUpper(sifra);*/
-            Console.SetCursorPosition(2, yPozicija + 8);
+            ConsoleKeyInfo sifra;
+            do
+            {
+                Console.SetCursorPosition(58, yPozicija + 15);
+                sifra = Console.ReadKey();
+
+            } while (sifra.Key != ConsoleKey.D && sifra.Key != ConsoleKey.N);
+            Console.SetCursorPosition(2, yPozicija + 16);
             Console.Write("Da li zelite da podesite pocetna podesavanja? (d/n) ");
-           /* char podesavanja;
+            ConsoleKeyInfo podesavanja;
             bool izvrsavanje;
-            podesavanja = Convert.ToChar(Console.Read());
-            podesavanja = char.ToUpper(podesavanja);
-          while(podesavanja != 'D' && podesavanja != 'N')
-          { podesavanja = Convert.ToChar(Console.Read());
-            podesavanja = char.ToUpper(podesavanja);
-            if(podesavanja == 'D')
-              izvrsavanje = true;
-            else if(podesavanja == 'N')
-              izvrsavanje = false;
-          else continue;
-          }*/
+            do
+            {
+                Console.SetCursorPosition(58, yPozicija + 16);
+                podesavanja = Console.ReadKey();
+            } while (podesavanja.Key != ConsoleKey.D && podesavanja.Key != ConsoleKey.N);
+            if (podesavanja.Key == ConsoleKey.D)
+                izvrsavanje = true;
+            else
+                izvrsavanje = false;
+            if (izvrsavanje)
+                Console.Write(" Izvrsavanje tacno");
+            else
+                Console.Write(" Izvrsavanje netacno");
         }
         static void crtajKvadratSaBrojem(int xPozicija, int yPozicija, int broj)
         {
             Console.SetCursorPosition(xPozicija, yPozicija);
-            Console.BackgroundColor = 0;
             Console.Write("" + gLevi + hor + hor + hor + "" + gDesni);
 
             Console.SetCursorPosition(xPozicija, yPozicija + 1);
@@ -97,7 +105,7 @@ class Program
         static void PodesavanjeReflektora()
         {
             int reflektor = 1;
-            Console.SetCursorPosition(14, 20);
+            Console.SetCursorPosition(14, 27);
             ConsoleKeyInfo strelica;
             do
             {
@@ -110,7 +118,7 @@ class Program
                 {
                     PodesiReflektor(false, ref reflektor);
                 }
-                Console.SetCursorPosition(14, 20);
+                Console.SetCursorPosition(14, 27);
             } while (strelica.Key != ConsoleKey.Enter);
         }
         static void CrtanjeReflektora(int yPozicija)
@@ -129,7 +137,7 @@ class Program
         static int[,] PodesavanjePozicija()
         {
             int x = X * 8 + 22;
-            int y = 14;
+            int y = 21;
 
             Console.SetCursorPosition(x, y);
             ConsoleKeyInfo strelica;
@@ -243,15 +251,15 @@ class Program
             else rotor++;
             if (rotor == -26) rotor = 0;
             Console.Write(abeceda[(rotor + 26) % 26]);
-            Console.SetCursorPosition(xPozicija, 17);
+            Console.SetCursorPosition(xPozicija, 24);
             Console.Write(abeceda[(rotor + 27) % 26]);
-            Console.SetCursorPosition(xPozicija, 23);
+            Console.SetCursorPosition(xPozicija, 30);
             Console.Write(abeceda[(rotor + 25) % 26]);
         }
         static void PodesavanjeRotora()
         {
             int x = X * 8 + 22;
-            int y = 20;
+            int y = 27;
 
             Console.SetCursorPosition(x, y);
             ConsoleKeyInfo strelica;
@@ -481,12 +489,12 @@ class Program
         {
             ConsoleColor[] nizBoja = { ConsoleColor.Red, ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Blue, ConsoleColor.Green, ConsoleColor.Green, ConsoleColor.DarkBlue, ConsoleColor.DarkBlue, ConsoleColor.Cyan, ConsoleColor.Cyan, ConsoleColor.DarkGreen, ConsoleColor.DarkGreen, ConsoleColor.Magenta, ConsoleColor.Magenta, ConsoleColor.DarkRed, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.DarkMagenta, ConsoleColor.DarkYellow, ConsoleColor.DarkYellow, ConsoleColor.DarkCyan, ConsoleColor.DarkCyan, ConsoleColor.DarkGray, ConsoleColor.DarkGray };
             int[] xAbeceda = { 21, 30, 26, 25, 24, 27, 29, 31, 34, 33, 35, 36, 34, 32, 36, 20, 20, 26, 23, 28, 32, 28, 22, 24, 22, 30 };
-            int[] yAbeceda = { 41, 43, 43, 41, 39, 41, 41, 41, 39, 41, 41, 43, 43, 43, 39, 43, 39, 39, 41, 39, 39, 43, 39, 43, 43, 39 };
+            int[] yAbeceda = { 48, 50, 50, 48, 46, 48, 48, 48, 46, 48, 48, 50, 50, 50, 46, 50, 46, 46, 48, 46, 46, 50, 46, 50, 50, 46 };
             char slovo;
             ConsoleKeyInfo taster;
             do
             {
-                Console.SetCursorPosition(0, 36);
+                Console.SetCursorPosition(0, 43);
                 taster = Console.ReadKey();
                 if ((taster.KeyChar < 'A' || taster.KeyChar > 'Z') && (taster.KeyChar < 'a' || taster.KeyChar > 'z') || taster.Key == ConsoleKey.Enter)
                 {
@@ -567,8 +575,8 @@ class Program
             } while (taster.Key != ConsoleKey.Enter);
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static int xUnos = 0, yUnos = 46;
-        static int xIspis = 30, yIspis = 46;
+        static int xUnos = 0, yUnos = 53;
+        static int xIspis = 30, yIspis = 53;
 
         static char UnosSlova()
         {
@@ -630,31 +638,31 @@ class Program
         }
         static void Main(string[] args)
         {
-            
-          do
-          {
-            Informacije(2);
-            CrtanjeReflektora(19);
-            CrtanjeRotora(16);
-            PozicijeRotora(13);
-            Tastatura(26);
-            Plugboard(38);
-            PodesavanjeReflektora();
-            PodesavanjePozicija();
-            PodesavanjeRotora();
-            PodesavanjePlugboard();
-            char slovo;
-            Console.SetCursorPosition(0, 45);
-            Console.Write("UNOS: ");
-            Console.SetCursorPosition(30, 45);
-            Console.Write("ISPIS: ");
+
             do
             {
-                slovo = UnosSlova();
-                // slovo treba da se sifruje OVDE pa da se stavi u ispis i svetla
-                Svetla(26, slovo);
-                Ispis(slovo);
-            } while (slovo != '.');
-          }while(true);
+                Informacije(2);
+                CrtanjeReflektora(26);
+                CrtanjeRotora(23);
+                PozicijeRotora(20);
+                Tastatura(33);
+                Plugboard(45);
+                PodesavanjeReflektora();
+                PodesavanjePozicija();
+                PodesavanjeRotora();
+                PodesavanjePlugboard();
+                char slovo;
+                Console.SetCursorPosition(0, 52);
+                Console.Write("UNOS: ");
+                Console.SetCursorPosition(30, 52);
+                Console.Write("ISPIS: ");
+                do
+                {
+                    slovo = UnosSlova();
+                    // slovo treba da se sifruje OVDE pa da se stavi u ispis i svetla
+                    Svetla(33, slovo);
+                    Ispis(slovo);
+                } while (slovo != '.');
+            } while (true);
         }
     }
