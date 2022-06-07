@@ -3,7 +3,20 @@ using System.Threading;
 
 class Program
 {
-    static char hor = '\u2500', ver = '\u2502';
+  static void Pozadina()
+  {
+    Console.BackgroundColor = ConsoleColor.Black;
+    for(int i = 0; i < 55;i++)
+    {
+      for(int j = 0; j < 100;j++)
+      {
+        Console.Write(" ");
+      }
+      Console.WriteLine();
+    }
+    Console.Clear();
+  }
+  static char hor = '\u2500', ver = '\u2502';
     static char gLevi = '\u250C', gDesni = '\u2510';
     static char dLevi = '\u2514', dDesni = '\u2518';
     static char gornji = '\u252C', donji = '\u2534';
@@ -143,7 +156,7 @@ class Program
         CrtajKvadratSaBrojem(12, yPozicija, 1);
     }
     //PODESAVANJA REDOSLEDNIH POZICIJA ROTORA
-    static void IzaberiPoziciju(bool jesteGore, int xPozicija, ref int pozicijaRotora)
+    static void IzaberiPoziciju(bool jesteGore, ref int pozicijaRotora)
     {
         if (jesteGore) pozicijaRotora++;
         else pozicijaRotora--;
@@ -175,20 +188,20 @@ class Program
             else if (strelica.Key == ConsoleKey.UpArrow)
             {
                 if (x == 22)
-                    IzaberiPoziciju(true, x, ref pozicijeRotora[2]);
+                    IzaberiPoziciju(true, ref pozicijeRotora[2]);
                 else if (x == 30)
-                    IzaberiPoziciju(true, x, ref pozicijeRotora[1]);
+                    IzaberiPoziciju(true, ref pozicijeRotora[1]);
                 else
-                    IzaberiPoziciju(true, x, ref pozicijeRotora[0]);
+                    IzaberiPoziciju(true, ref pozicijeRotora[0]);
             }
             else if (strelica.Key == ConsoleKey.DownArrow)
             {
                 if (x == 22)
-                    IzaberiPoziciju(false, x, ref pozicijeRotora[2]);
+                    IzaberiPoziciju(false, ref pozicijeRotora[2]);
                 else if (x == 30)
-                    IzaberiPoziciju(false, x, ref pozicijeRotora[1]);
+                    IzaberiPoziciju(false, ref pozicijeRotora[1]);
                 else
-                    IzaberiPoziciju(false, x, ref pozicijeRotora[0]);
+                    IzaberiPoziciju(false, ref pozicijeRotora[0]);
             }
             x = X * 8 + 22;
             Console.SetCursorPosition(x, y);
@@ -346,19 +359,19 @@ class Program
             if (slovo == prviRed[i])
             {
                 UpaliSvetlo(slovo, 11 + (i * 4), yPozicija + 1);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
                 UgasiSvetlo(slovo, 11 + (i * 4), yPozicija + 1);
             }
             else if (i < 8 && slovo == drugiRed[i])
             {
                 UpaliSvetlo(slovo, 13 + (i * 4), yPozicija + 4);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
                 UgasiSvetlo(slovo, 13 + (i * 4), yPozicija + 4);
             }
             else if (slovo == treciRed[i])
             {
                 UpaliSvetlo(slovo, 11 + (i * 4), yPozicija + 7);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
                 UgasiSvetlo(slovo, 11 + (i * 4), yPozicija + 7);
             }
         }
@@ -487,9 +500,8 @@ class Program
         return ConsoleKey.Enter;
     }
     
-    static int[,] PodesavanjePostavki(int[,] postavke, int mod)
+    static void PodesavanjePostavki(int[,] postavke, int mod)
     {
-        int[,] _trenutniRotori = new int[3, 27];
         if (mod == 0)//mod nula: namestanje rotora
             for (int i = 1; i < 4; i++)
                 for (int j = 0; j < 27; j++)
@@ -500,17 +512,17 @@ class Program
         else //mod dva: namestanje plugboarda
             for (int i = 0; i < 26; i++)
                 postavke[0, i] = plugboard[i];
-        return _trenutniRotori;
+      //return postavke;
     }
-    static char Sifrovanje(int Slovo, int[,] Postavke)
+    static char Sifrovanje(int slovo, int[,] postavke)
     {
         bool pom = false;
         for (int i = 0; i >= 0; i += pom ? -1 : 1)
         {
-            Slovo = Postavke[i, (Slovo + pomeraj[i]) % 26];
-            if (i == Postavke.GetLength(0) - 1) pom = true;
+            slovo = postavke[i, (slovo + pomeraj[i]) % 26];
+            if (i == postavke.GetLength(0) - 1) pom = true;
         }
-        return Convert.ToChar(Slovo + 'A');
+        return Convert.ToChar(slovo + 'A');
     }
     static int xUnos = 0, yUnos = 41;
     static ConsoleKey UnosSlova()
@@ -535,7 +547,6 @@ class Program
             }
             if (taster.Key == ConsoleKey.Enter || taster.Key == ConsoleKey.Escape)
                 return taster.Key;
-            Console.Write('\b');
         } while ((taster.KeyChar < 'A' || taster.KeyChar > 'Z') && (taster.KeyChar <'a'||taster.KeyChar>'z'));
         xUnos++;
         return taster.Key;
@@ -558,32 +569,33 @@ class Program
         Console.Write(slovo);
         xIspis++;
     }
-    static void PomeranjeRotora(int brojRotora, int xPozicija)
+    static void PomeranjeRotora( int brojRotora, int xPozicija )
     {
-        Console.SetCursorPosition(xPozicija, 12);
-        pomeraj[brojRotora]++;
-        if (pomeraj[brojRotora] == 26) pomeraj[brojRotora] = 0;
-        Console.Write(abeceda[(pomeraj[brojRotora] + 26) % 26]);
-        Console.SetCursorPosition(xPozicija, 9);
-        Console.Write(abeceda[(pomeraj[brojRotora] + 27) % 26]);
-        Console.SetCursorPosition(xPozicija, 15);
-        Console.Write(abeceda[(pomeraj[brojRotora] + 25) % 26]);
+        Console.SetCursorPosition( xPozicija, 12 );
+        pomeraj[ brojRotora ]++;
+        if( pomeraj[ brojRotora ] == 26 ) pomeraj[ brojRotora ] = 0;
+        Console.Write( abeceda[ ( pomeraj[ brojRotora ] + 26 ) % 26 ] );
+        Console.SetCursorPosition( xPozicija, 9 );
+        Console.Write( abeceda[ ( pomeraj[ brojRotora ] + 27 ) % 26 ] );
+        Console.SetCursorPosition( xPozicija, 15 );
+        Console.Write( abeceda[ ( pomeraj[ brojRotora ] + 25 ) % 26 ] );
     }
-    static void PomeranjeRotoraKadaSeStisneSlovo(int[,] postavke)
+    static void PomeranjeRotoraKadaSeStisneSlovo( int[,] postavke )
     {
-        PomeranjeRotora(1, 38);
-        if (postavke[1, pomeraj[1]] == postavke[1, 26])
+        PomeranjeRotora( 1, 38 );
+        if( pomeraj[ 1 ]==postavke[ 1, 26 ] )
         {
-            PomeranjeRotora(2, 30);
+            PomeranjeRotora( 2, 30 );
         }
-        if (postavke[2, pomeraj[2]] == postavke[2, 26])
+        if(  pomeraj[ 2 ] == postavke[ 2, 26 ] )
         {
-            PomeranjeRotora(3, 22);
+            PomeranjeRotora( 3, 22 );
         }
     }
     static void Main(string[] args)
     {
-        int[,] postavke = new int[5, 27];
+      Pozadina();  
+      int[,] postavke = new int[5, 27];
         Informacije(2);
         Sadrzaj(52, 4);
         CrtanjeReflektora(11);
@@ -592,47 +604,63 @@ class Program
         Tastatura(18);
         Plugboard(30);
         ConsoleKey taster;
-        do
-        {
+      bool uslov1 = false;;
+          bool uslovKraj = false;;
+        while(!uslovKraj)
+        {   
+            uslov1 = false;
+            uslovKraj = false;
             taster = PodesavanjeReflektora(postavke);
             if (taster == ConsoleKey.Escape)
-                break;
+            {
+              uslovKraj = true;
+              continue;
+            }    
             taster = PodesavanjePozicija(postavke);
             if (taster == ConsoleKey.Escape)
-                break;
+                {
+              uslovKraj = true;
+              continue;
+            }
             taster = PodesavanjeRotora();
             if (taster == ConsoleKey.Escape)
-                break;
+                {
+              uslovKraj = true;
+              continue;
+            }
             taster = PodesavanjePlugboard(postavke);
             if (taster == ConsoleKey.Escape)
-                break;
+            {
+              uslovKraj = true;
+              continue;
+            }
             char slovo;
+             
             Console.SetCursorPosition(0, 40);
             Console.Write("UNOS: ");
             Console.SetCursorPosition(30, 40);
             Console.Write("ISPIS: ");
-            do
+            while (!uslov1)
             {
                 taster = UnosSlova();
                 if (taster == ConsoleKey.Escape)
-                    goto kraj;
+                {
+                  uslov1 = true;
+                  uslovKraj = true;
+                  continue;
+                }    
                 else if (taster == ConsoleKey.Enter)
-                    break;
+                {
+                  uslov1 = true;
+                  continue;
+                }    
                 slovo = Convert.ToChar(taster);
                 slovo = Sifrovanje(slovo, postavke);// slovo treba da se sifruje OVDE pa da se stavi u ispis i svetla
-                /*pomeraj[1] = ++pomeraj[1] % 26;
-                if (pomeraj[1] == postavke[2, 26])
-                {
-                    pomeraj[2] = ++pomeraj[2] % 26;
-                    if (pomeraj[3] == postavke[3, 26])
-                        pomeraj[3] = ++pomeraj[3] % 26;
-                }*/
                 Svetla(18, slovo);
                 PomeranjeRotoraKadaSeStisneSlovo(postavke);
                 Ispis(slovo);
-            } while (true);
-        } while (true);
-        kraj:;
+            }
+        }
         Console.SetCursorPosition(0, 100);
     }
 }
