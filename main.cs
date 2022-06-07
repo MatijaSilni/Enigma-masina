@@ -99,6 +99,18 @@ class Program
             Console.WriteLine();
             Console.SetCursorPosition(xPozicija, yPozicija += 3);
         }
+      Console.SetCursorPosition(xPozicija, yPozicija+=2);
+      Console.WriteLine("KRETANJE KROZ PROGRAM");
+      Console.SetCursorPosition(xPozicija, ++yPozicija);
+      Console.WriteLine("1. Da bi se kretali kroz program - kliknite enter");
+      Console.SetCursorPosition(xPozicija, ++yPozicija);
+      Console.WriteLine("2. Da bi izabrali reflektor, redosled rotora i početne");
+      Console.SetCursorPosition(xPozicija, ++yPozicija);
+      Console.WriteLine("pozicije rotora - krećite se na strelice");
+      Console.SetCursorPosition(xPozicija, ++yPozicija);
+      Console.WriteLine("3. Da bi podesili plugboard - unesite parove slova");
+      Console.SetCursorPosition(xPozicija, ++yPozicija);
+      Console.WriteLine("4. Da bi izašli iz programa - kliknite escape");
     }
     static void CrtajKvadratSaBrojem(int xPozicija, int yPozicija, int broj)
     {
